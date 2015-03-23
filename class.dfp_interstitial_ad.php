@@ -90,7 +90,7 @@ class DFP_Interstitial_Ad {
 
 		$interstitial_ad = $this;
 		// Send data to front end.
-		wp_localize_script( $this->script_name, 'dfp_interstitial', array($interstitial_ad) );
+		wp_localize_script( $this->script_name, 'dfp_interstitial', array( $interstitial_ad ) );
 		wp_enqueue_script( $this->script_name );
 	}
 
