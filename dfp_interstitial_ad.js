@@ -5,14 +5,10 @@
  *
  **/
 
-console.log(dfp_interstitial);
-
 /**
  * Ad Position Creation
  */
 googletag.cmd.push( function() {
-
-    console.log(dfp_ad_object[0]);
 
     var dfp_ad_data = dfp_ad_object[0],
         acct_id = dfp_ad_data.account_id,
@@ -39,18 +35,8 @@ googletag.cmd.push( function() {
             }
         }
     }
-    // Generates Ad Slots
-    load_ad_positions(dfp_ad_data.positions);
-    // Enable Single Request
-    googletag.pubads().enableSingleRequest();
-    // Targeting
-    set_targeting(dfp_ad_data.page_targeting);
     // Slot Rendering Events
     googletag.pubads().addEventListener('slotRenderEnded', slot_render);
-    // Collapse Empty Divs
-    googletag.pubads().collapseEmptyDivs(true);
-    // Go
-    googletag.enableServices();
 
     function render_interstitial_slot(position) {
         append_interstitial(position.position_tag);
@@ -72,24 +58,26 @@ googletag.cmd.push( function() {
      * @param {String} ad_tag - Div tag for the ad position
      */
     function append_interstitial(ad_tag) {
-        jQuery('body').ready().prepend('<div class="interstitialAd">' +
-            '<div class="close-interstitial">X</div>' +
-            '<!-- Roadblock -->' +
-            '<div id=' + ad_tag + '>' +
-            '<script type="text/javascript">' +
-            'googletag.cmd.push(function() { ' +
-            'googletag.display("' + ad_tag + '"); });' +
-            '</script>' +
-            '</div>' +
-            '<!-- Roadblock out-of-page -->' +
-            '<div id="' + ad_tag + '-oop">' +
-            '<script type="text/javascript">' +
-            'googletag.cmd.push(function() { ' +
-            'googletag.display("' + ad_tag + '-oop"); });' +
-            '</script>' +
-            '</div>' +
-            '</div>'
-        );
+        jQuery('body').ready(function() {
+            jQuery('<div class="interstitialAd">' +
+                '<div class="close-interstitial">X</div>' +
+                '<!-- Roadblock -->' +
+                '<div id=' + ad_tag + '>' +
+                '<script type="text/javascript">' +
+                'googletag.cmd.push(function() { ' +
+                'googletag.display("' + ad_tag + '"); });' +
+                '</script>' +
+                '</div>' +
+                '<!-- Roadblock out-of-page -->' +
+                '<div id="' + ad_tag + '-oop">' +
+                '<script type="text/javascript">' +
+                'googletag.cmd.push(function() { ' +
+                'googletag.display("' + ad_tag + '-oop"); });' +
+                '</script>' +
+                '</div>' +
+                '</div>'
+            ).prependTo('body');
+        });
 
         var close_overlay = function() {
             jQuery(this).hide();

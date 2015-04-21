@@ -18,35 +18,38 @@
  * Text Domain:       dfp-ads-interstitial
  */
 
-if ( class_exists( 'dfp_ads' ) ) {
+function dfp_interstitial_init() {
+	if ( class_exists( 'dfp_ads' ) ) {
 
-	global $dfp_ads;
+		global $dfp_ads;
+		include( 'class.dfp_interstitial_ad.php' );
 
-	include( 'class.dfp_interstitial_ad.php' );
-	$interstitial_ad          = new DFP_Interstitial_Ad ( $dfp_ads );
-	$interstitial_ad->dir_uri = plugins_url( null, __FILE__ );
-	$position_title           = dfp_get_settings_value( 'dfp_interstitial_id' );
-	$inter_position           = dfp_get_ad_position_by_name( $position_title );
-	$interstitial_ad->ad_position( $inter_position );
+		$interstitial_ad          = new DFP_Interstitial_Ad ( $dfp_ads );
+		$interstitial_ad->dir_uri = plugins_url( null, __FILE__ );
+		$position_title           = dfp_get_settings_value( 'dfp_interstitial_id' );
+		$inter_position           = dfp_get_ad_position_by_name( $position_title );
+		$interstitial_ad->ad_position( $inter_position );
 
-	/* Section Fields */
-	add_filter( 'dfp_ads_settings_fields', ( function ( $fields ) {
-		$fields['dfp_interstitial_id'] = array(
-			'id'          => 'dfp_interstitial_id',
-			'field'       => 'text',
-			'title'       => 'Interstitial Ad Title',
-			'section'     => 'general_settings',
-			'description' => 'Enter the ad code for the interstitial ad.'
-		);
+		/* Section Fields */
+		add_filter( 'dfp_ads_settings_fields', ( function ( $fields ) {
+			$fields['dfp_interstitial_id'] = array(
+				'id'          => 'dfp_interstitial_id',
+				'field'       => 'text',
+				'title'       => 'Interstitial Ad Title',
+				'section'     => 'general_settings',
+				'description' => 'Enter the ad code for the interstitial ad.'
+			);
 
-		return $fields;
-	} ) );
+			return $fields;
+		} ) );
 
-	// Add in position
-	add_filter( 'pre_dfp_ads_to_js', array( $interstitial_ad, 'send_ads_to_js' ) );
-	// Enqueues Scripts and Styles
-	add_action( 'wp_enqueue_scripts', array( $interstitial_ad, 'scripts_and_styles' ) );
-	// Adds Styles to head.
-	add_action( 'wp_head', array( $interstitial_ad, 'css_style' ) );
+		// Add in position
+		add_filter( 'pre_dfp_ads_to_js', array( $interstitial_ad, 'send_ads_to_js' ) );
+		// Enqueues Scripts and Styles
+		add_action( 'wp_enqueue_scripts', array( $interstitial_ad, 'scripts_and_styles' ) );
+		// Adds Styles to head.
+		add_action( 'wp_head', array( $interstitial_ad, 'css_style' ) );
 
+	}
 }
+add_action( 'plugins_loaded', 'dfp_interstitial_init' );

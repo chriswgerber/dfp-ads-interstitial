@@ -57,15 +57,15 @@ class DFP_Interstitial_Ad {
 	 * @param $dfp_ads DFP_Ads
 	 */
 	public function __construct( DFP_Ads $dfp_ads ) {
-		$this->ads = $dfp_ads;
+		$this->dfp_ads = $dfp_ads;
 	}
 
 	/**
-	 *
+	 * Filtering in roadblock ID
 	 */
 	public function send_ads_to_js( $dfp_ads ) {
 
-		$dfp_ads->roadblock_id = $this->ad_position->ad_name;
+		$dfp_ads->roadblock_ad = $this->ad_position;
 
 		return $dfp_ads;
 	}
@@ -79,6 +79,7 @@ class DFP_Interstitial_Ad {
 	 * Registers Scripts. Localizes data to interstitial_ad.js
 	 */
 	public function scripts_and_styles() {
+
 		// Preps the script
 		wp_register_script(
 			$this->script_name,
@@ -88,9 +89,6 @@ class DFP_Interstitial_Ad {
 			false
 		);
 
-		$interstitial_ad = $this;
-		// Send data to front end.
-		wp_localize_script( $this->script_name, 'dfp_interstitial', array( $interstitial_ad ) );
 		wp_enqueue_script( $this->script_name );
 	}
 
