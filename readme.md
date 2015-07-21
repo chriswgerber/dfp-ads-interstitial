@@ -22,6 +22,9 @@ Submit your questions at [chriswgerber.com/contact/](http://www.chriswgerber.com
 
 == Changelog ==
 
+= 1.0.1 =
+* Fixes to load correctly with new API from parent plugin.
+
 = 1.0.0 =
 * Initial Release
 
