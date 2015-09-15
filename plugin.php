@@ -17,6 +17,7 @@
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       dfp-ads-interstitial
  */
+namespace DFP_Ads;
 
 function dfp_interstitial_init() {
 	global $dfp_ads;
@@ -24,7 +25,7 @@ function dfp_interstitial_init() {
 	if ( $dfp_ads !== null ) {
 		include 'includes/Interstitial_Ad.php';
 
-		$interstitial_ad          = new DFP_Ads\Interstitial_Ad ( $dfp_ads );
+		$interstitial_ad          = new Interstitial_Ad ( $dfp_ads );
 		$interstitial_ad->dir_uri = plugins_url( null, __FILE__ );
 		$interstitial_pos_id      = dfp_get_settings_value( 'dfp_interstitial_id' );
 		$inter_position           = dfp_get_ad_position( $interstitial_pos_id );
@@ -57,4 +58,4 @@ function dfp_interstitial_init() {
 		add_action( 'wp_enqueue_scripts', array( $interstitial_ad, 'scripts_and_styles' ) );
 	}
 }
-add_action( 'plugins_loaded', 'dfp_interstitial_init' );
+add_action( 'plugins_loaded', '\DFP_Ads\dfp_interstitial_init' );
