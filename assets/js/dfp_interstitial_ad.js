@@ -82,9 +82,8 @@ jQuery(document).ready(function($) {
       .addService(googletag.pubads());
     // Callback when the slot is rendered.
     googletag.pubads().addEventListener('slotRenderEnded', function(event) {
-        console.log(event);
       if (
-          !event.isEmpty && (event.slot.getAdUnitPath() === ad_data.ad_position)
+          !event.isEmpty && (event.slot.getAdUnitPath() === (dfp_ads.account_id + ad_data.ad_position))
       ) {
         $('.interstitialAd').show();
       }
