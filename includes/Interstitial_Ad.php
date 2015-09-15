@@ -17,6 +17,9 @@ class Interstitial_Ad {
 
 	public $ad_position;
 
+	/**
+	 * @var \DFP_Ads\DFP_Ads
+	 */
 	public $dfp_ads;
 
 	/**

@@ -30,7 +30,6 @@ function Interstitial_Ad_Position(data) {
 // The Ad Position
 var dfp_ads = dfp_ad_object[0];
 var interstitial_ad = dfp_ads.interstitial_ad;
-console.log(dfp_ads);
 jQuery(document).ready(function($) {
   /**
    * Ad Position Data
@@ -83,8 +82,9 @@ jQuery(document).ready(function($) {
       .addService(googletag.pubads());
     // Callback when the slot is rendered.
     googletag.pubads().addEventListener('slotRenderEnded', function(event) {
+        console.log(event);
       if (
-          (event.slot.getAdUnitPath() === ad_data.ad_position) && !event.isEmpty
+          !event.isEmpty && (event.slot.getAdUnitPath() === ad_data.ad_position)
       ) {
         $('.interstitialAd').show();
       }
